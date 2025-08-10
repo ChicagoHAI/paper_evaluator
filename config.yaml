@@ -1,0 +1,41 @@
+# Paper Evaluator Configuration
+# This is an example configuration file. Copy to config.local.yaml and add your API key.
+
+# OpenRouter API key (get one from https://openrouter.ai/)
+openrouter_key: "YOUR_OPENROUTER_API_KEY_HERE"
+
+# List of LLM judges to use for evaluation
+judges:
+  - name: "Kimi"
+    model: "moonshotai/kimi-k2:free"
+    persona: "machine learning and AI systems"
+    
+  - name: "GLM"
+    model: "z-ai/glm-4.5-air:free"
+    persona: "natural language processing and computational linguistics"
+    
+  # You can add more judges with different models and personas
+  # - name: "Claude"
+  #   model: "anthropic/claude-3-haiku"
+  #   persona: "theoretical foundations and mathematical rigor"
+  #   
+  # - name: "GPT"
+  #   model: "openai/gpt-3.5-turbo"
+  #   persona: "practical applications and real-world impact"
+
+# Global settings
+settings:
+  # Delay between API calls (seconds) to respect rate limits
+  api_delay: 1.0
+  
+  # Maximum content length to send to LLM (characters)
+  max_content_length: 50000
+  
+  # Temperature for LLM responses (0.0 = deterministic, 1.0 = creative)
+  temperature: 0.1
+  
+  # Maximum tokens for LLM responses
+  max_tokens: 4000
+  
+  # Whether to save prompts to logs/ directory for inspection
+  log_prompts: false
