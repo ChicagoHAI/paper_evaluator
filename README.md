@@ -50,9 +50,10 @@ Evaluate a paper with all configured judges:
 uv run paper_evaluator paper.pdf config.local.yaml
 ```
 
-Or using Python module syntax:
+Or equivalently:
 ```bash
-uv run python -m src paper.pdf config.local.yaml
+source .venv/bin/activate
+paper_evaluator paper.pdf config.local.yaml
 ```
 
 ### Advanced Options
