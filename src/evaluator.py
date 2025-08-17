@@ -40,7 +40,7 @@ class LLMEvaluator:
         }
     
     def evaluate_paper(self, paper_content: str, paper_title: str = "Unknown Paper", 
-                      judge_persona: str = "") -> str:
+                      judge_persona: str = "", guidelines_file: str = "resource/neurips_guidelines.txt") -> str:
         """
         Evaluate a paper using the configured LLM.
         
@@ -53,9 +53,9 @@ class LLMEvaluator:
             Generated review text
         """
         if judge_persona:
-            prompt = create_multi_judge_prompt(paper_content, paper_title, judge_persona)
+            prompt = create_multi_judge_prompt(paper_content, paper_title, judge_persona, guidelines_file)
         else:
-            prompt = create_evaluation_prompt(paper_content, paper_title)
+            prompt = create_evaluation_prompt(paper_content, paper_title, guidelines_file)
         
         # Log prompt if enabled
         if self.log_prompts:
@@ -164,7 +164,8 @@ class LLMEvaluator:
     
     def batch_evaluate(self, paper_content: str, paper_title: str, 
                       judges: List[Dict[str, str]], delay: float = 1.0,
-                      temperature: float = None, max_tokens: int = None) -> Dict[str, str]:
+                      temperature: float = None, max_tokens: int = None, 
+                      guidelines_file: str = "resource/neurips_guidelines.txt") -> Dict[str, str]:
         """
         Evaluate a paper with multiple judges.
         
@@ -193,7 +194,7 @@ class LLMEvaluator:
             judge_max_tokens = max_tokens if max_tokens is not None else self.max_tokens
             
             evaluator = LLMEvaluator(self.api_key, judge_model, judge_temperature, judge_max_tokens, self.log_prompts)
-            review = evaluator.evaluate_paper(paper_content, paper_title, judge_persona)
+            review = evaluator.evaluate_paper(paper_content, paper_title, judge_persona, guidelines_file)
             reviews[judge_name] = review
             
             # Add delay between calls to respect rate limits

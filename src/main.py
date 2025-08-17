@@ -145,6 +145,9 @@ Examples:
         # Check if prompt logging is enabled (from config or command line)
         log_prompts = args.log_prompts or settings.get('log_prompts', False)
         
+        # Get guidelines file path from config
+        guidelines_file = config.get('guidelines_file', 'resource/neurips_guidelines.txt')
+        
         # Create evaluator and run evaluations
         evaluator = LLMEvaluator(api_key, temperature=temperature, max_tokens=max_tokens, log_prompts=log_prompts)
         
@@ -155,7 +158,8 @@ Examples:
             review = evaluator.evaluate_paper(
                 clean_content, 
                 paper_title, 
-                judge.get('persona', '')
+                judge.get('persona', ''),
+                guidelines_file
             )
             
             output_file = output_dir / f"{paper_name}.{judge_name}.review.txt"
@@ -170,7 +174,8 @@ Examples:
                 clean_content, 
                 paper_title, 
                 judges,
-                delay=api_delay
+                delay=api_delay,
+                guidelines_file=guidelines_file
             )
             
             # Save individual reviews

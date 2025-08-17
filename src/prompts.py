@@ -7,16 +7,16 @@ import os
 from pathlib import Path
 
 
-def load_review_guidelines() -> str:
-    """Load the review guidelines from resource/review_guidelines.txt"""
-    resource_dir = Path(__file__).parent.parent / "resource"
-    guidelines_path = resource_dir / "review_form.txt"
+def load_review_guidelines(guidelines_file: str = "resource/neurips_guidelines.txt") -> str:
+    """Load the review guidelines from specified file path"""
+    project_root = Path(__file__).parent.parent
+    guidelines_path = project_root / guidelines_file
     
     with open(guidelines_path, 'r', encoding='utf-8') as f:
         return f.read()
 
 
-def create_evaluation_prompt(paper_content: str, paper_title: str = "Unknown Paper") -> str:
+def create_evaluation_prompt(paper_content: str, paper_title: str = "Unknown Paper", guidelines_file: str = "resource/neurips_guidelines.txt") -> str:
     """
     Create a structured prompt for LLM-based paper evaluation.
     
@@ -27,7 +27,7 @@ def create_evaluation_prompt(paper_content: str, paper_title: str = "Unknown Pap
     Returns:
         A formatted prompt for LLM evaluation
     """
-    guidelines = load_review_guidelines()
+    guidelines = load_review_guidelines(guidelines_file)
     
     prompt = f"""You are an expert academic peer reviewer evaluating a research paper for a top-tier conference. Your task is to provide a thorough, constructive, and fair review following the NeurIPS review guidelines.
 
@@ -62,7 +62,7 @@ REVIEW:
     return prompt
 
 
-def create_multi_judge_prompt(paper_content: str, paper_title: str = "Unknown Paper", judge_persona: str = "") -> str:
+def create_multi_judge_prompt(paper_content: str, paper_title: str = "Unknown Paper", judge_persona: str = "", guidelines_file: str = "resource/neurips_guidelines.txt") -> str:
     """
     Create a prompt for a specific judge persona.
     
@@ -74,7 +74,7 @@ def create_multi_judge_prompt(paper_content: str, paper_title: str = "Unknown Pa
     Returns:
         A formatted prompt tailored for the specific judge
     """
-    base_prompt = create_evaluation_prompt(paper_content, paper_title)
+    base_prompt = create_evaluation_prompt(paper_content, paper_title, guidelines_file)
     
     if judge_persona:
         persona_addition = f"""

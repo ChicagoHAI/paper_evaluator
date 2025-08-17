@@ -4,6 +4,9 @@
 # OpenRouter API key (get one from https://openrouter.ai/)
 openrouter_key: "YOUR_OPENROUTER_API_KEY_HERE"
 
+# Review guidelines file path (relative to project root)
+guidelines_file: "resource/neurips_guidelines.txt"
+
 # List of LLM judges to use for evaluation
 judges:
   - name: "Kimi"

@@ -4,13 +4,49 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a paper evaluator project that is currently in its initial state. It should be written in python. The goal is to implement an LLM as a judge according to guidelines.
+This is a paper evaluator project that implements an LLM-as-a-judge system for academic paper reviews. The project is written in Python and uses OpenRouter to access various LLM APIs for multi-judge evaluation.
 
-## Development Setup
+## Project Structure
 
-* Write the project in python
-* Use OpenRouter to call LLM APIs
-* resource/ has review_form.txt and review_guidelines.txt that you should use to write the key prompts for the LLM as a judge. Write the key prompt in a separate file in the src folder.
-* In the src folder, write a main function that takes a latex file or a pdf file and a config file, and run the LLM as judge and output the review in a text file.
-* The config file should specify which judges to use, specify an openrouter key. Generate an empty one with 'moonshotai/kimi-k2:free' and 'z-ai/glm-4.5-air:free' as examples. Generate another .local one that will actually be used but will be ignored in .gitignore.
-* Update README once you are done.
+* `src/` - Main source code
+  * `main.py` - CLI entry point and orchestration
+  * `evaluator.py` - LLM evaluation logic
+  * `file_processor.py` - PDF/LaTeX file processing
+  * `prompts.py` - Review prompts and templates
+* `resource/` - Review guidelines and forms
+* `config.yaml` - Example configuration (template)
+* `config.local.yaml` - Local configuration (gitignored)
+* `reviews/` - Output directory for reviews (gitignored)
+* `logs/` - Prompt logs for debugging (gitignored)
+* `tests/` - Sample papers for testing
+
+## Usage
+
+The main command-line interface accepts:
+```bash
+python -m src.main <paper_file> <config_file> [options]
+```
+
+Options:
+* `--output/-o` - Output directory (default: reviews/)
+* `--single-judge` - Use only one judge by name
+* `--verbose/-v` - Enable verbose output
+* `--log-prompts` - Save prompts to logs/ directory
+
+## Configuration
+
+The configuration file (`config.yaml`) specifies:
+* `openrouter_key` - OpenRouter API key
+* `judges` - List of LLM judges with model, name, and persona
+* `settings` - Global settings (temperature, max_tokens, api_delay, etc.)
+
+Example judges:
+* `moonshotai/kimi-k2:free` - Kimi model
+* `z-ai/glm-4.5-air:free` - GLM model
+
+## Development Commands
+
+* `uv run python -m src.main` - Run the evaluator
+* `uv run pytest` - Run tests
+* `uv run black src/` - Format code
+* `uv run flake8 src/` - Lint code
