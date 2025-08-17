@@ -6,6 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a paper evaluator project that implements an LLM-as-a-judge system for academic paper reviews. The project is written in Python and uses OpenRouter to access various LLM APIs for multi-judge evaluation.
 
+## New Feature
+
+We are going to add a new feature for improving a paper. The input is only a latex file, and it will run judges to get reviews, then it will read the reviews and the paper to determine a plan for changes, and then make changes according to the plan. This feature will have two modes. In the automatic mode, it will run this for num_rounds, default to 3. In the interactive mode, it will pause after making a plan and allow the users to review the plan.
+
+Update the configuration file to enable this feature and update README.md after implementing this feature.
+
 ## Project Structure
 
 * `src/` - Main source code

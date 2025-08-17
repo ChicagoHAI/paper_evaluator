@@ -43,6 +43,7 @@ config.local.yaml
 # Output files
 reviews/
 *.review.txt
+improvements/
 
 # Log files
 logs/

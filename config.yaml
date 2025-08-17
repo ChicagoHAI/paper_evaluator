@@ -42,3 +42,11 @@ settings:
   
   # Whether to save prompts to logs/ directory for inspection
   log_prompts: false
+
+# Paper improvement settings
+improvement:
+  # Default number of improvement rounds in automatic mode
+  default_rounds: 3
+  
+  # Output directory for improved papers
+  output_directory: "improvements"

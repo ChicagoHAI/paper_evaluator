@@ -9,6 +9,9 @@ An LLM-powered paper evaluation system that provides structured peer reviews fol
 - **Structured evaluation**: Follows NeurIPS review guidelines
 - **Comprehensive scoring**: Quality, Clarity, Significance, and Originality ratings
 - **Batch processing**: Evaluate with multiple judges simultaneously
+- **Paper improvement**: Iterative self-improvement based on LLM reviews
+- **Interactive mode**: Review improvement plans before applying changes
+- **Automatic mode**: Multi-round improvement without user intervention
 
 ## Installation
 
@@ -75,12 +78,32 @@ uv run paper_evaluator paper.pdf config.local.yaml --log-prompts
 uv run paper_evaluator paper.pdf config.local.yaml --output reviews/ --verbose --log-prompts
 ```
 
+### Paper Improvement
+
+Automatically improve a LaTeX paper based on LLM reviews:
+
+```bash
+# Automatic improvement (3 rounds by default)
+uv run paper_evaluator paper.tex config.local.yaml --improve
+
+# Automatic improvement with custom rounds
+uv run paper_evaluator paper.tex config.local.yaml --improve --rounds 5
+
+# Interactive improvement (pause for plan review)
+uv run paper_evaluator paper.tex config.local.yaml --improve --interactive
+
+# Combine with other options
+uv run paper_evaluator paper.tex config.local.yaml --improve --interactive --verbose
+```
+
 ### Output
 
 The system generates:
-- Individual review files: `paper_name.judge_name.review.txt`
-- Summary file (multi-judge): `paper_name.summary.txt`
-- Prompt logs (if enabled): `logs/{timestamp}_{paper}_{model}_{persona}.prompt.txt`
+- **Reviews**: Individual review files: `paper_name.judge_name.review.txt`
+- **Summary**: Summary file (multi-judge): `paper_name.summary.txt`
+- **Improvements**: Improved papers in `improvements/session_timestamp/`
+- **Plans**: Improvement plans: `round_N_plan.txt`
+- **Logs**: Prompt logs (if enabled): `logs/{timestamp}_{paper}_{model}_{persona}.prompt.txt`
 
 Each review includes:
 - Paper summary and key contributions
@@ -105,9 +128,10 @@ paper_evaluator/
 │   ├── main.py              # Command-line interface
 │   ├── evaluator.py         # LLM evaluation logic
 │   ├── file_processor.py    # PDF/LaTeX processing
-│   └── prompts.py           # Prompt generation
+│   ├── prompts.py           # Prompt generation
+│   └── improver.py          # Paper improvement logic
 ├── resource/
-│   └── review_form.txt      # NeurIPS review guidelines
+│   └── neurips_guidelines.txt # NeurIPS review guidelines
 ├── config.yaml              # Example configuration
 ├── config.local.yaml        # Local configuration (with API key)
 └── pyproject.toml           # Project dependencies

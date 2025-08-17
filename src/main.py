@@ -14,6 +14,7 @@ from typing import Dict, Any
 
 from .file_processor import FileProcessor
 from .evaluator import LLMEvaluator
+from .improver import PaperImprover
 
 
 def load_config(config_path: str) -> Dict[str, Any]:
@@ -57,6 +58,8 @@ Examples:
   python -m src.main paper.pdf config.yaml
   python -m src.main paper.tex config.local.yaml --output reviews/
   python -m src.main paper.pdf config.yaml --single-judge "Claude"
+  python -m src.main paper.tex config.yaml --improve --rounds 3
+  python -m src.main paper.tex config.yaml --improve --interactive
         """
     )
     
@@ -91,6 +94,25 @@ Examples:
         "--log-prompts",
         action="store_true",
         help="Save prompts to logs/ directory for inspection"
+    )
+    
+    parser.add_argument(
+        "--improve",
+        action="store_true",
+        help="Enable paper improvement mode (requires LaTeX file)"
+    )
+    
+    parser.add_argument(
+        "--interactive",
+        action="store_true",
+        help="Use interactive improvement mode (pause for plan review)"
+    )
+    
+    parser.add_argument(
+        "--rounds",
+        type=int,
+        default=3,
+        help="Number of improvement rounds in automatic mode (default: 3)"
     )
     
     args = parser.parse_args()
@@ -150,6 +172,36 @@ Examples:
         
         # Create evaluator and run evaluations
         evaluator = LLMEvaluator(api_key, temperature=temperature, max_tokens=max_tokens, log_prompts=log_prompts)
+        
+        # Check if improvement mode is enabled
+        if args.improve:
+            # Validate that the paper file is LaTeX
+            if not args.paper_file.endswith('.tex'):
+                raise ValueError("Improvement mode requires a LaTeX (.tex) file")
+            
+            # Create improver instance
+            improver = PaperImprover(evaluator, guidelines_file)
+            
+            if args.interactive:
+                # Interactive improvement mode
+                final_paper = improver.improve_paper_interactive(
+                    args.paper_file,
+                    judges,
+                    output_dir=args.output,
+                    verbose=args.verbose
+                )
+            else:
+                # Automatic improvement mode
+                final_paper = improver.improve_paper_automatic(
+                    args.paper_file,
+                    judges,
+                    num_rounds=args.rounds,
+                    output_dir=args.output,
+                    verbose=args.verbose
+                )
+            
+            print(f"Paper improvement completed! Final paper: {final_paper}")
+            return
         
         if len(judges) == 1:
             # Single judge evaluation
