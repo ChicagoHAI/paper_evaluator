@@ -171,4 +171,17 @@ uv run flake8 src/
 
 ## License
 
-[Add your license information here]
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Citation
+
+If you use this tool in your research, please cite:
+
+```bibtex
+@software{paper_evaluator,
+  title = {Paper Evaluator},
+  author = {Chenhao Tan},
+  year = {2025},
+  url = {https://github.com/yourusername/paper_evaluator}
+}
+```
