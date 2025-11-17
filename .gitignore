@@ -49,3 +49,10 @@ improvements/
 logs/
 
 *DS_Store
+
+# Personal test files
+ai_self_awareness*.tex
+tests/mafia.pdf
+
+# Project instructions (may contain personal preferences)
+CLAUDE.md

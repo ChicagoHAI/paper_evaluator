@@ -1,8 +1,25 @@
 [project]
 name = "paper_evaluator"
 version = "0.1.0"
-description = "LLM-based paper evaluation system"
+description = "LLM-powered paper evaluation system with multi-judge reviews and automatic improvement"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Chenhao Tan", email = "chenhao@uchicago.edu"}
+]
 requires-python = ">=3.8"
+keywords = ["academic", "paper", "review", "llm", "evaluation", "peer-review"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering",
+]
 dependencies = [
     "openai",
     "requests",
@@ -10,6 +27,10 @@ dependencies = [
     "python-magic",
     "pyyaml",
 ]
+
+[project.urls]
+Repository = "https://github.com/ChicagoHAI/paper_evaluator"
+Issues = "https://github.com/ChicagoHAI/paper_evaluator/issues"
 
 [project.scripts]
 paper_evaluator = "src.main:main"

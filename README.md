@@ -17,7 +17,7 @@ An LLM-powered paper evaluation system that provides structured peer reviews fol
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ChicagoHAI/paper_evaluator.git
    cd paper_evaluator
    ```
 
@@ -41,8 +41,8 @@ An LLM-powered paper evaluation system that provides structured peer reviews fol
 3. Customize judges and their personas as needed
 
 The configuration includes two free models by default:
-- `deepseek/kimi-k2:free` - Specialized in ML and AI systems
-- `zhipuai/glm-4.5-air:free` - Specialized in NLP and computational linguistics
+- `moonshotai/kimi-k2:free` - Specialized in ML and AI systems
+- `z-ai/glm-4.5-air:free` - Specialized in NLP and computational linguistics
 
 ## Usage
 
@@ -182,6 +182,6 @@ If you use this tool in your research, please cite:
   title = {Paper Evaluator},
   author = {Chenhao Tan},
   year = {2025},
-  url = {https://github.com/yourusername/paper_evaluator}
+  url = {https://github.com/ChicagoHAI/paper_evaluator}
 }
 ```

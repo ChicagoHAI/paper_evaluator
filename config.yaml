@@ -2,7 +2,8 @@
 # This is an example configuration file. Copy to config.local.yaml and add your API key.
 
 # OpenRouter API key (get one from https://openrouter.ai/)
-openrouter_key: "YOUR_OPENROUTER_API_KEY_HERE"
+# Replace with your actual API key (starts with sk-or-v1-)
+openrouter_key: "sk-or-v1-your-actual-api-key-here"
 
 # Review guidelines file path (relative to project root)
 guidelines_file: "resource/neurips_guidelines.txt"
